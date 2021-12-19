@@ -25,10 +25,54 @@ body {
 
 .dot {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
+    transform: translate(-50%, -50%);
     border-width: 0;
     border-radius: 50%;
+    background-color: #c0c0c0;
+
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+
+.dot.big {
+    width: 20px;
+    height: 20px;
+}
+
+.information-area {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(90% * 0.707);
     transform: translate(-50%, -50%);
-    background-color: #e0e0e0;
+}
+
+.remain-text {
+    color: #383838;
+    text-align: center;
+    line-height: 100%;
+    font-size: 20vw;
+}
+
+hr {
+    border: none;
+    border-bottom: solid 2px #cccccc;
+}
+
+.icon-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.information-area svg {
+    width: 6vw;
+    height: 6vw;
+    margin-top: 3vw;
+
+    transition-property: fill;
+    transition-duration: 0.3s;
 }
