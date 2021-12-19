@@ -5,6 +5,7 @@
 
 body {
     overflow: hidden;
+    -webkit-app-region: drag;
 }
 
 .square {
@@ -25,8 +26,8 @@ body {
 
 .dot {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 1.5vw;
+    height: 1.5vw;
     transform: translate(-50%, -50%);
     border-width: 0;
     border-radius: 50%;
@@ -37,8 +38,8 @@ body {
 }
 
 .dot.big {
-    width: 20px;
-    height: 20px;
+    width: 3vw;
+    height: 3vw;
 }
 
 .information-area {

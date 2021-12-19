@@ -1,6 +1,8 @@
 import path from 'path';
 import { BrowserWindow, app } from 'electron';
 
+import Store from 'electron-store';
+
 const isDev = process.env.NODE_ENV === 'development';
 
 const execPath =
@@ -17,14 +19,23 @@ if (isDev) {
     });
 }
 
+const store = new Store();
+
 const createWindow = () => {
+    let pos: any = store.get("window.pos", [0, 0]);
+    let size: any = store.get("window.size", [600, 620]);
+
     const mainWindow = new BrowserWindow({
         webPreferences: {
             preload: path.resolve(__dirname, 'preload.js'),
         },
-        width: 600,
-        height: 645,
+        x: pos[0],
+        y: pos[1],
+        width: size[0],
+        height: size[1],
     });
+
+    mainWindow.setMenu(null);
 
     if (isDev) {
         // 開発モードの場合はデベロッパーツールを開く
@@ -33,6 +44,11 @@ const createWindow = () => {
 
     // レンダラープロセスをロード
     mainWindow.loadFile('dist/index.html');
+
+    mainWindow.on('close', () => {
+        store.set("window.pos", mainWindow.getPosition());
+        store.set("window.size", mainWindow.getSize());
+    })
 };
 
 app.whenReady().then(async () => {
