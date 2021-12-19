@@ -23,7 +23,11 @@ export const Clock: React.FC = () => {
             setState(({ pomo, remain }) => {
                 if (remain <= 0) {
                     let new_pomo: Pomo = pomo === "work" ? "rest" : "work";
-                    let new_remain: number = pomo === "work" ? 60 * rest_interval : 60 * work_interval;
+                    let new_remain: number = pomo === "work" ? 60 *  rest_interval : 60 *  work_interval;
+
+                    let notification = new Notification(`time to ${pomo === "work" ? "rest" : "work"}`);
+                    notification.onshow = () => {setTimeout(() => notification.close(), 5000)};
+
                     return { pomo: new_pomo, remain: new_remain };
                 } else {
                     return { pomo: pomo, remain: remain - 1 };
