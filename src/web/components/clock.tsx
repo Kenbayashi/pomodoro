@@ -6,6 +6,7 @@ type Pomo = "work" | "rest";
 
 type State = {
     pomo: Pomo;
+    lap_count: number;
     remain: number;
 };
 
@@ -16,21 +17,22 @@ export const Clock: React.FC = () => {
     const rest_interval: number = 5;
     const rest_color: string = "#11ad11";
 
-    const [state, setState] = useState<State>({ pomo: "work", remain: 60 * work_interval });
+    const [state, setState] = useState<State>({ pomo: "work",lap_count: 1, remain: 60 * work_interval });
 
     useEffect(() => {
         const move_forward = () => {
-            setState(({ pomo, remain }) => {
+            setState(({ pomo, lap_count, remain }) => {
                 if (remain <= 0) {
                     let new_pomo: Pomo = pomo === "work" ? "rest" : "work";
+                    let new_lap_count: number = pomo === "work" ? lap_count : lap_count + 1;
                     let new_remain: number = pomo === "work" ? 60 *  rest_interval : 60 *  work_interval;
 
                     let notification = new Notification(`time to ${pomo === "work" ? "rest" : "work"}`);
                     notification.onshow = () => {setTimeout(() => notification.close(), 5000)};
 
-                    return { pomo: new_pomo, remain: new_remain };
+                    return { pomo: new_pomo, lap_count: new_lap_count, remain: new_remain };
                 } else {
-                    return { pomo: pomo, remain: remain - 1 };
+                    return { pomo: pomo, lap_count: lap_count, remain: remain - 1 };
                 }
             });
         };
@@ -83,6 +85,8 @@ export const Clock: React.FC = () => {
     }
 
     const information_area = () => {
+        let laps: string = `0${state.lap_count}`.slice(-2);
+
         let minute: string = `0${Math.floor(state.remain / 60)}`.slice(-2);
         let second: string = `0${state.remain % 60}`.slice(-2);
 
@@ -91,6 +95,7 @@ export const Clock: React.FC = () => {
 
         return (
             <div className="information-area">
+                <p className="laps-text">{`Pomo.${laps}`}</p>
                 <p className="remain-text">{`${minute}:${second}`}</p>
                 <hr />
                 <div className="icon-box">

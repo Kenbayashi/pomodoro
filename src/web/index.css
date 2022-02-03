@@ -47,7 +47,16 @@ body {
     left: 50%;
     top: 50%;
     width: calc(90% * 0.707);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -58%);
+}
+
+.laps-text {
+    color: #505050;
+    text-align: center;
+    line-height: 100%;
+    font-size: 5vw;
+
+    margin-bottom: 9vw;
 }
 
 .remain-text {
